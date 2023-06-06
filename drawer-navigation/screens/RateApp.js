@@ -2,6 +2,7 @@ import { View, Text, SafeAreaView, StyleSheet, Image, Alert } from 'react-native
 import React, {useState} from 'react'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
+
 export default function RateApp() {
   const [defaultRating, setdefaultRating] = useState(4)
   const [maxRating, setmaxRating] = useState([1,2,3,4,5])
