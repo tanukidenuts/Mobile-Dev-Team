@@ -1,144 +1,119 @@
-import "react-native-gesture-handler";
-import { View, Text, Image, Platform, StatusBar } from "react-native";
-import {
-  SimpleLineIcons,
-  MaterialIcons,
-  MaterialCommunityIcons,
-  FontAwesome
-} from "@expo/vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { NavigationContainer } from "@react-navigation/native";
+import React from "react";
+import { View, Text, Image, StyleSheet, SafeAreaView } from "react-native";
 import { DrawerItemList, createDrawerNavigator } from "@react-navigation/drawer";
+import { NavigationContainer } from "@react-navigation/native";
+import { SimpleLineIcons, MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import User from "./assets/user.png";
 import Profile from "./screens/Profile";
-import SendMoney from "./screens/SendMoney";
+//import SendMoney from "./screens/SendMoney";
 import Home from "./screens/Home";
 import RateApp from "./screens/RateApp";
 import SignOut from "./screens/SignOut";
 
 const Drawer = createDrawerNavigator();
 
+const CustomDrawerContent = (props) => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.drawerHeader}>
+        <Image source={User} style={styles.profileImage} />
+        <Text style={styles.userName}>Anthony De Quak</Text>
+        <Text style={styles.userRole}>Taga Kain ng Saging</Text>
+      </View>
+      <DrawerItemList {...props} />
+    </SafeAreaView>
+  );
+};
+
 export default function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        drawerContent={
-          (props) => {
-            return (
-              <SafeAreaView>
-                <View
-                  style={{
-                    height: 200,
-                    width: '100%',
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderBottomColor: "#f4f4f4",
-                    borderBottomWidth: 1
-                  }}
-                >
-                  <Image
-                    source={User}
-                    style={{
-                      height: 130,
-                      width: 130,
-                      borderRadius: 65
-                    }}
-                  />
-                  <Text
-                    style={{
-                      fontSize: 22,
-                      marginVertical: 6,
-                      fontWeight: "bold",
-                      color: "#111"
-                    }}
-                  >Anthony De Quak</Text>
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      color: "#111"
-                    }}
-                  >Taga Kain ng Saging</Text>
-                </View>
-                <DrawerItemList {...props} />
-              </SafeAreaView>
-            )
-          }
-        }
+        drawerContent={CustomDrawerContent}
+        drawerStyle={styles.drawerStyle}
         screenOptions={{
-          drawerStyle: {
-            backgroundColor: "#fff",
-            width: 250
-          },
-          headerStyle: {
-            backgroundColor: "#f4511e",
-          },
+          headerStyle: styles.headerStyle,
           headerTintColor: "#fff",
-          headerTitleStyle: {
-            fontWeight: "bold"
-          },
-          drawerLabelStyle: {
-            color: "#111"
-          }
+          headerTitleStyle: styles.headerTitleStyle,
+          drawerLabelStyle: styles.drawerLabelStyle,
         }}
       >
         <Drawer.Screen
           name="Home"
+          component={Home}
           options={{
             drawerLabel: "Home",
-            title: "Home",
-            drawerIcon: () => (
-              <SimpleLineIcons name="home" size={20} color="#808080" />
-            )
+            drawerIcon: ({ color, size }) => <SimpleLineIcons name="home" size={size} color={color} />,
           }}
-          component={Home}
         />
         <Drawer.Screen
           name="Profile"
+          component={Profile}
           options={{
             drawerLabel: "Profile",
-            title: "Profile",
-            drawerIcon: () => (
-              <MaterialCommunityIcons name="face-man-profile" size={20} color="#808080" />
-            )
+            drawerIcon: ({ color, size }) => <MaterialCommunityIcons name="face-man-profile" size={size} color={color} />,
           }}
-          component={Profile}
         />
-         <Drawer.Screen
-          name="SendMoney"
-          options={{
-            drawerLabel: "SendMoney",
-            title: "SendMoney",
-            drawerIcon: () => (
-              <MaterialIcons name="send" size={20} color="#808080" />
-            )
-          }}
-          component={SendMoney}
-        />
-         <Drawer.Screen
+      {/*  <Drawer.Screen name="SendMoney" component={SendMoney} options={{drawerLabel: "Send Money",drawerIcon: ({ color, size }) => <MaterialIcons name="send" size={size} color={color} />,}}/> */}
+          
+        <Drawer.Screen
           name="RateApp"
-          options={{
-            drawerLabel: "RateApp",
-            title: "RateApp",
-            drawerIcon: () => (
-              <MaterialIcons name="star-rate" size={20} color="#808080" />
-            )
-          }}
           component={RateApp}
+          options={{
+            drawerLabel: "Rate App",
+            drawerIcon: ({ color, size }) => <MaterialIcons name="star-rate" size={size} color={color} />,
+          }}
         />
         <Drawer.Screen
           name="SignOut"
-          options={{
-            drawerLabel: "SignOut",
-            title: "SignOut",
-            drawerIcon: () => (
-              <MaterialIcons name="logout" size={20} color="#808080" />
-            )
-          }}
           component={SignOut}
+          options={{
+            drawerLabel: "Sign Out",
+            drawerIcon: ({ color, size }) => <MaterialIcons name="logout" size={size} color={color} />,
+          }}
         />
-       
-       
       </Drawer.Navigator>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  drawerHeader: {
+    backgroundColor: "#f4f4f4",
+    paddingVertical: 20,
+    alignItems: "center",
+  },
+  profileImage: {
+    height: 130,
+    width: 130,
+    borderRadius: 65,
+    marginBottom: 10,
+  },
+  userName: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "#111",
+  },
+  userRole: {
+    fontSize: 16,
+    color: "#111",
+  },
+  drawerStyle: {
+    width: 250,
+  },
+  headerStyle: {
+    backgroundColor: "#f4511e",
+    borderBottomWidth: 0, // Remove the bottom border in the header
+    },
+    headerTitleStyle: {
+    fontWeight: "bold",
+    },
+    drawerLabelStyle: {
+    color: "#111",
+    fontSize: 16,
+    marginLeft: -10, 
+    },
+    });
