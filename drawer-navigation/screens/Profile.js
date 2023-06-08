@@ -7,6 +7,7 @@ const Profile = () => {
   const [location, setLocation] = useState('Jungle');
   const [occupation, setOccupation] = useState('Software Developer');
   const [bio, setBio] = useState('Taga Kain ng Saging');
+  const [age, setAge] = useState('30');
 
   const handleEditProfile = () => {
     setIsEditing(true);
@@ -14,9 +15,7 @@ const Profile = () => {
 
   const handleSaveProfile = () => {
     setIsEditing(false);
-   
     console.log('Save profile');
-    
   };
 
   return (
@@ -38,7 +37,16 @@ const Profile = () => {
       <View style={styles.infoContainer}>
         <View style={styles.infoItem}>
           <Text style={styles.infoLabel}>Age</Text>
-          <Text style={styles.infoText}>30</Text>
+          {isEditing ? (
+            <TextInput
+              style={styles.editInput}
+              value={age}
+              onChangeText={setAge}
+              keyboardType="numeric"
+            />
+          ) : (
+            <Text style={styles.infoText}>{parseInt(age) || ''}</Text>
+          )}
         </View>
         <View style={styles.infoItem}>
           <Text style={styles.infoLabel}>Location</Text>
@@ -125,7 +133,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
-    width: 150,
+    width: 100,  // Adjust the width as desired
     marginBottom: 5,
   },
   button: {
