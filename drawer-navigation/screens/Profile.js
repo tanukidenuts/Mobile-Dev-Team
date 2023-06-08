@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState('Anthony De Quak');
+  const [location, setLocation] = useState('Jungle');
+  const [occupation, setOccupation] = useState('Software Developer');
   const [bio, setBio] = useState('Taga Kain ng Saging');
 
   const handleEditProfile = () => {
-    // Perform the edit profile action here
-    console.log('Edit profile');
-    // Add your logic for editing the profile
-    // You can show a modal or navigate to an edit profile screen
+    setIsEditing(true);
+  };
+
+  const handleSaveProfile = () => {
+    setIsEditing(false);
+   
+    console.log('Save profile');
+    
   };
 
   return (
@@ -19,7 +25,15 @@ const Profile = () => {
         source={require('../assets/user.png')}
         style={styles.profileImage}
       />
-      <Text style={styles.name}>{name}</Text>
+      {isEditing ? (
+        <TextInput
+          style={styles.editInput}
+          value={name}
+          onChangeText={setName}
+        />
+      ) : (
+        <Text style={styles.name}>{name}</Text>
+      )}
       <Text style={styles.bio}>{bio}</Text>
       <View style={styles.infoContainer}>
         <View style={styles.infoItem}>
@@ -28,16 +42,38 @@ const Profile = () => {
         </View>
         <View style={styles.infoItem}>
           <Text style={styles.infoLabel}>Location</Text>
-          <Text style={styles.infoText}>Jungle</Text>
+          {isEditing ? (
+            <TextInput
+              style={styles.editInput}
+              value={location}
+              onChangeText={setLocation}
+            />
+          ) : (
+            <Text style={styles.infoText}>{location}</Text>
+          )}
         </View>
         <View style={styles.infoItem}>
           <Text style={styles.infoLabel}>Occupation</Text>
-          <Text style={styles.infoText}>Software Developer</Text>
+          {isEditing ? (
+            <TextInput
+              style={styles.editInput}
+              value={occupation}
+              onChangeText={setOccupation}
+            />
+          ) : (
+            <Text style={styles.infoText}>{occupation}</Text>
+          )}
         </View>
       </View>
-      <TouchableOpacity style={styles.button} onPress={handleEditProfile}>
-        <Text style={styles.buttonText}>Edit Profile</Text>
-      </TouchableOpacity>
+      {isEditing ? (
+        <TouchableOpacity style={styles.button} onPress={handleSaveProfile}>
+          <Text style={styles.buttonText}>Save Profile</Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={styles.button} onPress={handleEditProfile}>
+          <Text style={styles.buttonText}>Edit Profile</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -81,6 +117,16 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: 16,
+  },
+  editInput: {
+    fontSize: 16,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    width: 150,
+    marginBottom: 5,
   },
   button: {
     backgroundColor: '#009688',
