@@ -29,7 +29,7 @@ const SendMoney = ({ currentBalance, updateCurrentBalance }) => {
     // Update the current balance by subtracting the sent amount
     updateCurrentBalance(parsedAmount);
 
-    alert(`Successfully sent $${amount} to ${recipient}`);
+    alert(`Successfully sent ₱${amount} to ${recipient}`);
 
     setRecipient('');
     setAmount('');
